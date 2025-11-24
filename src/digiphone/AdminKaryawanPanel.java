@@ -182,7 +182,7 @@ public class AdminKaryawanPanel extends JPanel {
 
     private void showAddKaryawanDialog() {
         JDialog dialog = new JDialog(parentFrame, "Tambah Karyawan", true);
-        dialog.setSize(400, 500);
+        dialog.setSize(400, 420);
         dialog.setLocationRelativeTo(parentFrame);
 
         JPanel panel = new JPanel(new GridBagLayout());
@@ -261,7 +261,7 @@ public class AdminKaryawanPanel extends JPanel {
 
     private void showEditKaryawanDialog(int id) {
         JDialog dialog = new JDialog(parentFrame, "Edit Karyawan", true);
-        dialog.setSize(400, 500);
+        dialog.setSize(400, 420);
         dialog.setLocationRelativeTo(parentFrame);
 
         JPanel panel = new JPanel(new GridBagLayout());

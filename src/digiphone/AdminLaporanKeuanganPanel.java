@@ -1,6 +1,8 @@
 // AdminLaporanKeuanganPanel.java
 package digiphone;
 
+import com.toedter.calendar.JDateChooser; // ← Tambahkan ini
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -16,6 +18,10 @@ public class AdminLaporanKeuanganPanel extends JPanel {
     private JPanel totalQRISCard;
     private JPanel totalCashCard;
     
+    // Tambahkan field untuk date choosers
+    private JDateChooser dariChooser;
+    private JDateChooser sampaiChooser;
+
     public AdminLaporanKeuanganPanel(JFrame parent) {
         this.parentFrame = parent;
         setLayout(new BorderLayout(10, 10));
@@ -26,7 +32,7 @@ public class AdminLaporanKeuanganPanel extends JPanel {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setForeground(new Color(0, 139, 139));
         
-        // Filter Panel
+        // Filter Panel dengan JDateChooser
         JPanel filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 10));
         filterPanel.setBackground(Color.WHITE);
         filterPanel.setBorder(BorderFactory.createCompoundBorder(
@@ -42,28 +48,30 @@ public class AdminLaporanKeuanganPanel extends JPanel {
         
         JLabel dariLabel = new JLabel("Dari:");
         dariLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        
-        JTextField dariField = new JTextField(10);
-        dariField.setFont(new Font("Arial", Font.PLAIN, 12));
-        dariField.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-        
+        dariChooser = new JDateChooser();
+        dariChooser.setDateFormatString("yyyy-MM-dd");
+        dariChooser.setDate(new Date());
+        dariChooser.setPreferredSize(new Dimension(120, 25));
+
         JLabel sampaiLabel = new JLabel("Sampai:");
         sampaiLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        
-        JTextField sampaiField = new JTextField(10);
-        sampaiField.setFont(new Font("Arial", Font.PLAIN, 12));
-        sampaiField.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-        
+        sampaiChooser = new JDateChooser();
+        sampaiChooser.setDateFormatString("yyyy-MM-dd");
+        sampaiChooser.setDate(new Date());
+        sampaiChooser.setPreferredSize(new Dimension(120, 25));
+
         JButton filterBtn = new JButton("Filter");
         styleButton(filterBtn, new Color(0, 191, 255));
+        filterBtn.setForeground(new Color(0, 191, 255));
         
         JButton resetBtn = new JButton("Reset");
         styleButton(resetBtn, new Color(255, 165, 0));
+        resetBtn.setForeground(new Color(255, 165, 0));
         
         filterPanel.add(dariLabel);
-        filterPanel.add(dariField);
+        filterPanel.add(dariChooser);
         filterPanel.add(sampaiLabel);
-        filterPanel.add(sampaiField);
+        filterPanel.add(sampaiChooser);
         filterPanel.add(filterBtn);
         filterPanel.add(resetBtn);
         
@@ -81,8 +89,8 @@ public class AdminLaporanKeuanganPanel extends JPanel {
         statsPanel.add(totalQRISCard);
         statsPanel.add(totalCashCard);
         
-        // Table
-        String[] columns = {"ID Kasir", "Tanggal Transaksi", "Kode Transaksi", "Metode Pembayaran", "Total"};
+        // Table: ubah kolom pertama jadi "Nama Kasir"
+        String[] columns = {"Nama Kasir", "Tanggal Transaksi", "Kode Transaksi", "Metode Pembayaran", "Total"};
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -105,21 +113,22 @@ public class AdminLaporanKeuanganPanel extends JPanel {
         
         // Filter Button Action
         filterBtn.addActionListener(e -> {
-            String dari = dariField.getText().trim();
-            String sampai = sampaiField.getText().trim();
+            Date dari = dariChooser.getDate();
+            Date sampai = sampaiChooser.getDate();
             
-            if (dari.isEmpty() || sampai.isEmpty()) {
+            if (dari == null || sampai == null) {
                 JOptionPane.showMessageDialog(parentFrame, "Tanggal harus diisi!");
                 return;
             }
             
-            loadLaporanKeuangan(dari, sampai);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            loadLaporanKeuangan(sdf.format(dari), sdf.format(sampai));
         });
         
         // Reset Button Action
         resetBtn.addActionListener(e -> {
-            dariField.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-            sampaiField.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            dariChooser.setDate(new Date());
+            sampaiChooser.setDate(new Date());
             loadLaporanKeuangan(null, null);
         });
         
@@ -169,9 +178,12 @@ public class AdminLaporanKeuanganPanel extends JPanel {
         try {
             Connection conn = DatabaseConnection.getConnection();
             
-            String query = "SELECT t.id_kasir, DATE_FORMAT(t.tanggal, '%d-%m-%Y %H:%i') as tgl, " +
+            // Modifikasi query: JOIN dengan tabel kasir untuk dapatkan nama
+            String query = "SELECT t.id_kasir, k.nama_lengkap, " +
+                          "DATE_FORMAT(t.tanggal, '%d-%m-%Y %H:%i') as tgl, " +
                           "t.kode_transaksi, t.jenis_pembayaran, t.total_biaya " +
-                          "FROM transaksi t ";
+                          "FROM transaksi t " +
+                          "LEFT JOIN karyawan k ON t.id_kasir = k.id ";
             
             if (dari != null && sampai != null) {
                 query += "WHERE DATE(t.tanggal) BETWEEN ? AND ? ";
@@ -193,11 +205,14 @@ public class AdminLaporanKeuanganPanel extends JPanel {
             double totalCash = 0;
             
             while (rs.next()) {
+                String namaKasir = rs.getString("nama_lengkap");
+                if (namaKasir == null) namaKasir = "–"; // fallback jika tidak ada relasi
+                
                 String metodePembayaran = rs.getString("jenis_pembayaran");
                 double total = rs.getDouble("total_biaya");
                 
                 tableModel.addRow(new Object[]{
-                    rs.getInt("id_kasir"),
+                    namaKasir, // ← tampilkan nama, bukan ID
                     rs.getString("tgl"),
                     rs.getString("kode_transaksi"),
                     metodePembayaran,
@@ -206,14 +221,13 @@ public class AdminLaporanKeuanganPanel extends JPanel {
                 
                 totalPendapatan += total;
                 
-                if (metodePembayaran.equalsIgnoreCase("QRIS")) {
+                if (metodePembayaran != null && metodePembayaran.equalsIgnoreCase("QRIS")) {
                     totalQRIS += total;
-                } else if (metodePembayaran.equalsIgnoreCase("Cash")) {
+                } else if (metodePembayaran != null && metodePembayaran.equalsIgnoreCase("Cash")) {
                     totalCash += total;
                 }
             }
             
-            // Update cards
             updateCardValue(totalPendapatanCard, "Rp " + String.format("%,.0f", totalPendapatan));
             updateCardValue(totalQRISCard, "Rp " + String.format("%,.0f", totalQRIS));
             updateCardValue(totalCashCard, "Rp " + String.format("%,.0f", totalCash));
