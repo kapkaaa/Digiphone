@@ -57,15 +57,14 @@ public class KasirDashboard extends JFrame {
         menuPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
         menuPanel.setPreferredSize(new Dimension(220, 0));
         
-        JLabel logoLabel = new JLabel("📱 DigiPhone", JLabel.CENTER);
+        JLabel logoLabel = new JLabel("DigiPhone", JLabel.CENTER);
         logoLabel.setFont(new Font("Arial", Font.BOLD, 18));
         logoLabel.setForeground(new Color(0, 139, 139));
         logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         menuPanel.add(logoLabel);
         menuPanel.add(Box.createVerticalStrut(30));
         
-        String[] menuItems = {"Transaksi", "Riwayat Transaksi", "Laporan Transaksi", 
-                              "Claim Garansi", "Laporan Keuangan", "Logout"};
+        String[] menuItems = {"Transaksi", "Riwayat Transaksi", "Claim Garansi", "Laporan Keuangan", "Logout"};
         for (String item : menuItems) {
             JButton btn = createMenuButton(item);
             menuPanel.add(btn);
@@ -79,7 +78,7 @@ public class KasirDashboard extends JFrame {
         
         contentPanel.add(new KasirTransaksiPanel(this, userId, username), "Transaksi");
         contentPanel.add(new KasirRiwayatTransaksiPanel(this), "Riwayat Transaksi");
-        contentPanel.add(new KasirLaporanTransaksiPanel(this), "Laporan Transaksi");
+//        contentPanel.add(new KasirLaporanTransaksiPanel(this), "Laporan Transaksi");
         contentPanel.add(new KasirClaimGaransiPanel(this), "Claim Garansi");
         contentPanel.add(new AdminLaporanKeuanganPanel(this), "Laporan Keuangan");
         
