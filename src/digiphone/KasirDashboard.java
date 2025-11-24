@@ -81,7 +81,7 @@ public class KasirDashboard extends JFrame {
         contentPanel.add(new KasirRiwayatTransaksiPanel(this), "Riwayat Transaksi");
         contentPanel.add(new KasirLaporanTransaksiPanel(this), "Laporan Transaksi");
         contentPanel.add(new KasirClaimGaransiPanel(this), "Claim Garansi");
-        contentPanel.add(new KasirLaporanKeuanganPanel(this), "Laporan Keuangan");
+        contentPanel.add(new AdminLaporanKeuanganPanel(this), "Laporan Keuangan");
         
         mainPanel.add(topPanel, BorderLayout.NORTH);
         mainPanel.add(menuPanel, BorderLayout.WEST);
