@@ -14,6 +14,7 @@ public class KasirTransaksiPanel extends JPanel {
     private JFrame parentFrame;
     private int userId;
     private String username;
+    private String namaLengkap;
     private DefaultTableModel hpModel;
     private DefaultTableModel cartModel;
     private JTable hpTable;
@@ -30,10 +31,11 @@ public class KasirTransaksiPanel extends JPanel {
     private JLabel totalBelanjaLabel;
     private int selectedHPId = -1;
     
-    public KasirTransaksiPanel(JFrame parent, int userId, String username) {
+    public KasirTransaksiPanel(JFrame parent, int userId, String username, String namaLengkap) {
         this.parentFrame = parent;
         this.userId = userId;
         this.username = username;
+        this.namaLengkap = namaLengkap;
         
         setLayout(new BorderLayout(10, 10));
         setBackground(Color.WHITE);
@@ -659,7 +661,7 @@ public class KasirTransaksiPanel extends JPanel {
         
         sb.append("================= STRUK PEMBAYARAN ================\n");
         sb.append("Tanggal     : ").append(now).append("\n");
-        sb.append("Kasir       : ").append(username).append("\n");
+        sb.append("Kasir       : ").append(namaLengkap).append("\n");
         sb.append("==================================================\n\n");
         
         sb.append("================= RINCIAN BIAYA ==================\n");

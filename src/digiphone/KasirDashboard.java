@@ -143,6 +143,10 @@ public class KasirDashboard extends JFrame {
         return username;
     }
     
+    public String getName() {
+        return namaLengkap;
+    }
+    
     public String getNamaLengkap() {
         return namaLengkap;
     }
