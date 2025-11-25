@@ -64,7 +64,7 @@ public class KasirDashboard extends JFrame {
         menuPanel.add(logoLabel);
         menuPanel.add(Box.createVerticalStrut(30));
         
-        String[] menuItems = {"Transaksi", "Riwayat Transaksi", "Claim Garansi", "Laporan Keuangan", "Logout"};
+        String[] menuItems = {"Transaksi", "Riwayat Transaksi", "Laporan Keuangan", "Logout"};
         for (String item : menuItems) {
             JButton btn = createMenuButton(item);
             menuPanel.add(btn);
@@ -79,7 +79,7 @@ public class KasirDashboard extends JFrame {
         contentPanel.add(new KasirTransaksiPanel(this, userId, username, namaLengkap), "Transaksi");
         contentPanel.add(new KasirRiwayatTransaksiPanel(this), "Riwayat Transaksi");
 //        contentPanel.add(new KasirLaporanTransaksiPanel(this), "Laporan Transaksi");
-        contentPanel.add(new KasirClaimGaransiPanel(this), "Claim Garansi");
+//        contentPanel.add(new KasirClaimGaransiPanel(this), "Claim Garansi");
         contentPanel.add(new AdminLaporanKeuanganPanel(this), "Laporan Keuangan");
         
         mainPanel.add(topPanel, BorderLayout.NORTH);
