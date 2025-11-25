@@ -64,7 +64,7 @@ public class AdminDashboard extends JFrame {
         menuPanel.add(logoLabel);
         menuPanel.add(Box.createVerticalStrut(30));
         
-        String[] menuItems = {"Dashboard", "Karyawan", "HP", "Laporan Keuangan", "Logout"};
+        String[] menuItems = {"Dashboard", "Karyawan", "HP", "Riwayat Transaksi", "Laporan Keuangan", "Logout"};
         for (String item : menuItems) {
             JButton btn = createMenuButton(item);
             menuPanel.add(btn);
@@ -79,6 +79,7 @@ public class AdminDashboard extends JFrame {
         contentPanel.add(new AdminDashboardPanel(), "Dashboard");
         contentPanel.add(new AdminKaryawanPanel(this), "Karyawan");
         contentPanel.add(new AdminHPPanel(this), "HP");
+        contentPanel.add(new KasirRiwayatTransaksiPanel(this), "Riwayat Transaksi");
         contentPanel.add(new AdminLaporanKeuanganPanel(this), "Laporan Keuangan");
         
         mainPanel.add(topPanel, BorderLayout.NORTH);
