@@ -76,7 +76,7 @@ public class KasirDashboard extends JFrame {
         contentPanel = new JPanel(cardLayout);
         contentPanel.setBackground(Color.WHITE);
         
-        contentPanel.add(new KasirTransaksiPanel(this, userId, username), "Transaksi");
+        contentPanel.add(new KasirTransaksiPanel(this, userId, username, namaLengkap), "Transaksi");
         contentPanel.add(new KasirRiwayatTransaksiPanel(this), "Riwayat Transaksi");
 //        contentPanel.add(new KasirLaporanTransaksiPanel(this), "Laporan Transaksi");
         contentPanel.add(new KasirClaimGaransiPanel(this), "Claim Garansi");
