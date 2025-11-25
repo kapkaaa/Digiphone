@@ -198,7 +198,7 @@ public class AdminHPPanel extends JPanel {
     
     private void showAddHPDialog() {
         JDialog dialog = new JDialog(parentFrame, "Tambah HP", true);
-        dialog.setSize(450, 600);
+        dialog.setSize(450, 500);
         dialog.setLocationRelativeTo(parentFrame);
         
         JPanel panel = new JPanel(new GridBagLayout());
@@ -276,7 +276,7 @@ public class AdminHPPanel extends JPanel {
     
     private void showEditHPDialog(int id) {
         JDialog dialog = new JDialog(parentFrame, "Edit HP", true);
-        dialog.setSize(450, 600);
+        dialog.setSize(450, 520);
         dialog.setLocationRelativeTo(parentFrame);
         
         JPanel panel = new JPanel(new GridBagLayout());
