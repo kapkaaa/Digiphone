@@ -194,6 +194,7 @@ public class KasirTransaksiPanel extends JPanel {
         
         JButton addBtn = new JButton("+ Tambah ke Keranjang");
         styleButton(addBtn, new Color(60, 179, 113));
+        addBtn.setForeground(new Color(60, 179, 113));
         addBtn.addActionListener(e -> addToCart());
         
         gbc.gridx = 0;
@@ -254,14 +255,17 @@ public class KasirTransaksiPanel extends JPanel {
         
         JButton tambahQtyBtn = new JButton("+");
         styleButton(tambahQtyBtn, new Color(60, 179, 113));
+        tambahQtyBtn.setForeground(new Color(60, 179, 113));
         tambahQtyBtn.setPreferredSize(new Dimension(50, 30));
         
         JButton kurangQtyBtn = new JButton("-");
         styleButton(kurangQtyBtn, new Color(255, 165, 0));
+        kurangQtyBtn.setForeground(new Color(255, 165, 0));
         kurangQtyBtn.setPreferredSize(new Dimension(50, 30));
         
         JButton hapusBtn = new JButton("Hapus");
         styleButton(hapusBtn, new Color(220, 20, 60));
+        hapusBtn.setForeground(new Color(220, 20, 60));
         
         cartButtonPanel.add(tambahQtyBtn);
         cartButtonPanel.add(kurangQtyBtn);
@@ -348,11 +352,13 @@ public class KasirTransaksiPanel extends JPanel {
         
         JButton prosesBtn = new JButton("Proses Transaksi");
         styleButton(prosesBtn, new Color(60, 179, 113));
+        prosesBtn.setForeground(new Color(60, 179, 113));
         prosesBtn.setPreferredSize(new Dimension(140, 35));
         prosesBtn.addActionListener(e -> prosesTransaksi());
         
         JButton resetBtn = new JButton("Reset");
         styleButton(resetBtn, new Color(255, 165, 0));
+        resetBtn.setForeground(new Color(255, 165, 0));
         resetBtn.setPreferredSize(new Dimension(100, 35));
         resetBtn.addActionListener(e -> resetForm());
         
@@ -699,6 +705,7 @@ public class KasirTransaksiPanel extends JPanel {
         
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         JButton printBtn = new JButton("Print");
+        printBtn.setForeground(new Color(60, 179, 113));
         styleButton(printBtn, new Color(60, 179, 113));
         printBtn.addActionListener(e -> {
             try {
@@ -710,6 +717,7 @@ public class KasirTransaksiPanel extends JPanel {
         
         JButton closeBtn = new JButton("Tutup");
         styleButton(closeBtn, new Color(255, 165, 0));
+        closeBtn.setForeground(new Color(255, 165, 0));
         closeBtn.addActionListener(e -> receiptDialog.dispose());
         
         buttonPanel.add(printBtn);
